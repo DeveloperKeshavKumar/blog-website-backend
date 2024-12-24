@@ -1,5 +1,6 @@
-import { Context, Hono } from 'hono'
+import { Hono } from 'hono'
 import routes from './routes';
+import { cors } from 'hono/cors';
 
 type UUID = string;
 
@@ -13,6 +14,11 @@ const app = new Hono<{
   }
 }>();
 
+app.use(cors({
+  origin: '*',
+  allowMethods: ['GET', 'POST', 'PUT'],
+  allowHeaders: ['Content-Type', 'Authorization']
+}));
 app.route("/", routes);
 
 export default app
